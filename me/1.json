@@ -1,0 +1,93 @@
+{
+  "title": "DECRYPT: The Ripple Effect: Crypto Market Soars $73.5B After Judge's Ruling in XRP SEC Case",
+  "source": "Blogs",
+  "url": "https://decrypt.co/148555/the-ripple-effect-crypto-market-soars-73-5b-after-judges-ruling-xrp-sec-case",
+  "time": 1689328017578,
+  "symbols": [
+    "XRP_USDT",
+    "XRP_BTC"
+  ],
+  "en": "DECRYPT: The Ripple Effect: Crypto Market Soars $73.5B After Judge's Ruling in XRP SEC Case",
+  "firstPrice": {
+    "XRPUSDT": 0.7763,
+    "XRPBTC": 0.00002488
+  },
+  "_id": "1689328017577DTRECMS7AJRiXSC",
+  "suggestions": [
+    {
+      "found": [
+        "XRP",
+        "Ripple"
+      ],
+      "coin": "XRP",
+      "symbols": [
+        {
+          "exchange": "binance-futures",
+          "symbol": "XRPUSDT"
+        },
+        {
+          "exchange": "binance",
+          "symbol": "XRPUSDT"
+        },
+        {
+          "exchange": "binance",
+          "symbol": "XRPBTC"
+        },
+        {
+          "exchange": "binance",
+          "symbol": "XRPBUSD"
+        },
+        {
+          "exchange": "binance",
+          "symbol": "XRPBNB"
+        },
+        {
+          "exchange": "binance",
+          "symbol": "XRPETH"
+        },
+        {
+          "exchange": "bybit-perps",
+          "symbol": "XRPUSDT"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "action": "BINFUT_XRPUSDT",
+      "title": "XRPUSDT PERP",
+      "icon": "https://news.treeofalpha.com/static/images/binance_icon.png"
+    },
+    {
+      "action": "BIN_XRP_USDT",
+      "title": "XRP/USDT",
+      "icon": "https://news.treeofalpha.com/static/images/binance_icon.png"
+    },
+    {
+      "action": "BIN_XRP_BTC",
+      "title": "XRP/BTC",
+      "icon": "https://news.treeofalpha.com/static/images/binance_icon.png"
+    },
+    {
+      "action": "BIN_XRP_BUSD",
+      "title": "XRP/BUSD",
+      "icon": "https://news.treeofalpha.com/static/images/binance_icon.png"
+    },
+    {
+      "action": "BIN_XRP_BNB",
+      "title": "XRP/BNB",
+      "icon": "https://news.treeofalpha.com/static/images/binance_icon.png"
+    },
+    {
+      "action": "BIN_XRP_ETH",
+      "title": "XRP/ETH",
+      "icon": "https://news.treeofalpha.com/static/images/binance_icon.png"
+    },
+    {
+      "action": "BYBIT_XRPUSDT",
+      "title": "XRPUSDT PERP",
+      "icon": "https://news.treeofalpha.com/static/images/bybit.png"
+    }
+  ],
+  "delay": 5000
+}
