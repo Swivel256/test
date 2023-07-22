@@ -2,5 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/CCXT_beYANG_OKX" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/gojsonq" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/gojsonq" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/python/td" vcs="Git" />
   </component>
 </project>

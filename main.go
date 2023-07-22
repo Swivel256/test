@@ -5,10 +5,17 @@ import (
 	"fmt"
 	"github.com/ginvmbot/aitrade/pkg"
 	"github.com/ginvmbot/aitrade/pkg/cmdutil"
+	"github.com/ginvmbot/aitrade/pkg/filter"
+	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
+	"github.com/rifflock/lfshook"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"github.com/tidwall/gjson"
+
 	"os"
+	"path"
 	"syscall"
+	"time"
 )
 
 func init() {
@@ -22,23 +29,53 @@ func init() {
 	}
 	viper.AutomaticEnv()
 
-	//viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
-
-	// Log as JSON instead of the default ASCII formatter.
-	log.SetFormatter(&log.JSONFormatter{})
-
-	// Output to stdout instead of the default stderr
-	// Can be any io.Writer, see below for File example
-	log.SetOutput(os.Stdout)
-
-	// Only log the warning severity or above.
+	// 设置日志级别
 	log.SetLevel(log.DebugLevel)
 
+	log.SetFormatter(&log.JSONFormatter{})
+	logDir := "log"
+	if err := os.MkdirAll(logDir, 0777); err != nil {
+		log.Panic(err)
+	}
+	writer, err := rotatelogs.New(
+		path.Join(logDir, "access_log.%Y%m%d"),
+		rotatelogs.WithLinkName("access_log"),
+		rotatelogs.WithRotationTime(time.Duration(24)*time.Hour),
+	)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	log.AddHook(
+		lfshook.NewHook(
+			lfshook.WriterMap{
+				log.DebugLevel: writer,
+				log.InfoLevel:  writer,
+				log.WarnLevel:  writer,
+				log.ErrorLevel: writer,
+				log.FatalLevel: writer,
+			}, &log.JSONFormatter{}),
+	)
+
+}
+func reg() {
+	content, err := os.ReadFile("./data/allNews.json")
+	if err != nil {
+		log.Fatal("Error when opening file: ", err)
+	}
+	json := string(content)
+	value := gjson.Parse(json)
+
+	for _, item := range value.Array() {
+		filter.Filter([]byte(item.String()))
+	}
+
+	filter.SaveToCSV()
 }
 func main() {
 	tb := pkg.NewTradeBot()
 	tb.Run()
-
+	log.Info("running...")
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	cmdutil.WaitForSignal(ctx, syscall.SIGINT, syscall.SIGTERM)

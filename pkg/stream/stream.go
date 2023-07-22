@@ -82,6 +82,8 @@ type StandardStream struct {
 	connectCallbacks []func()
 
 	disconnectCallbacks []func()
+
+	Connected bool
 }
 
 type StandardStreamEmitter interface {
@@ -173,19 +175,19 @@ func (s *StandardStream) Read(ctx context.Context, conn *websocket.Conn, cancel 
 					_ = conn.Close()
 					// for close error, we should re-connect
 					// emit reconnect to start a new connection
-					s.Reconnect()
+					s.Reconnect("*websocket.CloseError"+err.Error())
 					return
 
 				case net.Error:
 					log.WithError(err).Error("websocket read network error")
 					_ = conn.Close()
-					s.Reconnect()
+					s.Reconnect("net error"+err.Error())
 					return
 
 				default:
 					log.WithError(err).Error("unexpected websocket error")
 					_ = conn.Close()
-					s.Reconnect()
+					s.Reconnect(err.Error())
 					return
 				}
 			}
@@ -236,7 +238,7 @@ func (s *StandardStream) ping(ctx context.Context, conn *websocket.Conn, cancel 
 		case <-pingTicker.C:
 			if err := conn.WriteControl(websocket.PingMessage, nil, time.Now().Add(writeTimeout)); err != nil {
 				log.WithError(err).Error("ping error", err)
-				s.Reconnect()
+				s.Reconnect(fmt.Sprintf("ping error, reconnecting in %s...",err))
 			}
 		}
 	}
@@ -254,8 +256,8 @@ func (s *StandardStream) Subscribe(channel Channel, symbol string, options Subsc
 	})
 }
 
-func (s *StandardStream) Reconnect() {
-
+func (s *StandardStream) Reconnect(msg string) {
+	fmt.Println("socket:", msg)
 	select {
 	case s.ReconnectC <- struct{}{}:
 	default:
@@ -271,7 +273,7 @@ func (s *StandardStream) Connect(ctx context.Context) error {
 
 	// start one re-connector goroutine with the base context
 	go s.reconnector(ctx)
-
+	s.Connected = true
 	s.EmitStart()
 	return nil
 }
@@ -287,17 +289,20 @@ func (s *StandardStream) reconnector(ctx context.Context) {
 			return
 
 		case <-s.ReconnectC:
+			if !s.Connected {
+				log.Warnf("received reconnect signal, cooling for %s...", reconnectCoolDownPeriod)
+				time.Sleep(reconnectCoolDownPeriod)
 
-			log.Warnf("received reconnect signal, cooling for %s...", reconnectCoolDownPeriod)
-			time.Sleep(reconnectCoolDownPeriod)
+				log.Warnf("re-connecting...")
+				s.ConnCancel()
+				if err := s.DialAndConnect(ctx); err != nil {
+					log.WithError(err).Errorf("re-connect error, try to reconnect later")
 
-			log.Warnf("re-connecting...")
-			if err := s.DialAndConnect(ctx); err != nil {
-				log.WithError(err).Errorf("re-connect error, try to reconnect later")
-
-				// re-emit the re-connect signal if error
-				s.Reconnect()
+					// re-emit the re-connect signal if error
+					s.Reconnect("reconnect error")
+				}
 			}
+
 		}
 	}
 }
@@ -329,7 +334,7 @@ func (s *StandardStream) Dial(ctx context.Context, args ...string) (*websocket.C
 	} else {
 		return nil, errors.New("can not dial, neither url nor endpoint creator is not defined, you should pass an url to Dial() or call SetEndpointCreator()")
 	}
-	fmt.Println("url", url)
+	//fmt.Println("url", url)
 
 	conn, _, err := defaultDialer.Dial(url, nil)
 	if err != nil {

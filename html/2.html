@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+<style>
+  css
+  .table {
+    display: table;
+    width: 100%;
+  }
+
+  .table-header,
+  .table-row {
+    display: table-row;
+  }
+
+  .col {
+    display: table-cell;
+    padding: 10px;
+  }
+
+  .col-1 {
+    width: 30%;
+  }
+
+  .col-2 {
+    width: 70%;
+  }
+</style>
+<div id="app">
+
+  <ul class="table">
+    <li class="table-header">
+      <div class="col col-1">Name</div>
+      <div class="col col-2">Age</div>
+      <div class="col col-2">Age</div>
+      <div class="col col-2">Age</div>
+
+
+    </li>
+
+    <li class="table-row"  v-for="(item,index) in users" :key="index">
+      <div class="col col-1"> <img :src="item.icon"></div>
+      <div class="col col-2">{{item.name}} </div>
+      <div class="col col-2">{{item.screen_name}} </div>
+      <div class="col col-2">{{item.id}} </div>
+    </li>
+
+
+  </ul>
+
+</div>
+<script>
+
+  const App = {
+    setup() {
+
+
+      const users = Vue.ref([] );
+      const getJson=()=>{
+        const url = "https://news.treeofalpha.com/api"
+        let twitterCategories = []
+        fetch(url + "/twittercategories").then(function (response) {
+          return response.json()
+        }).then(function (json) {
+          twitterCategories = json
+          fetch(url + "/twitters", {
+            method: "GET"
+          }).then(function (response) {
+            return response.json()
+          }).then(function (json) {
+
+            if (twitterCategories) {
+              var categories = []
+                      , categoryOrder = [];
+              for (var i = 0; i < json.length; i++) {
+                if (twitterCategories[json[i].id] && !categoryOrder.includes(twitterCategories[json[i].id]))
+                  categoryOrder.push(twitterCategories[json[i].id])
+              }
+              json.sort(function (a, b) {
+                var aIndex = categoryOrder.indexOf(twitterCategories[a.id]);
+                var bIndex = categoryOrder.indexOf(twitterCategories[b.id]);
+                if (aIndex == -1 && bIndex > aIndex)
+                  return 1;
+                else if (bIndex == -1 && aIndex > bIndex)
+                  return -1;
+                else if (aIndex < bIndex)
+                  return -1;
+                else if (aIndex > bIndex)
+                  return 1;
+                return 0
+              })
+              //showJson(json)
+              users.value=json
+              console.log(users)
+            }
+
+          })
+        })
+      }
+      getJson()
+      return {
+        users,
+
+      };
+    },
+  };
+  Vue.createApp(App).mount('#app');
+</script>
+</body>
+</html>

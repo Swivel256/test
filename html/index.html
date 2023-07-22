@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div id="app">
+    <div>{{ message }}</div>
+    <table>
+        <tr><td></td><td></td></tr>
+
+        <tr
+            v-for="user in users"
+
+        ><td>{{user.name}}</td><td></td></tr>
+
+    </table>
+
+</div>
+</body>
+
+<script>
+
+
+
+</script>
+<script type="importmap">
+  {
+    "imports": {
+      "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+    }
+  }
+</script>
+
+
+
+<script type="module" setup>
+    import { ref } from 'vue'
+    import { createApp } from 'vue'
+    const users = ref( );
+    const users = Vue.ref('');
+    const getJson=()=>{
+        const url = "https://news.treeofalpha.com/api"
+        let twitterCategories = []
+        fetch(url + "/twittercategories").then(function (response) {
+            return response.json()
+        }).then(function (json) {
+            twitterCategories = json
+            fetch(url + "/twitters", {
+                method: "GET"
+            }).then(function (response) {
+                return response.json()
+            }).then(function (json) {
+
+                if (twitterCategories) {
+                    var categories = []
+                        , categoryOrder = [];
+                    for (var i = 0; i < json.length; i++) {
+                        if (twitterCategories[json[i].id] && !categoryOrder.includes(twitterCategories[json[i].id]))
+                            categoryOrder.push(twitterCategories[json[i].id])
+                    }
+                    json.sort(function (a, b) {
+                        var aIndex = categoryOrder.indexOf(twitterCategories[a.id]);
+                        var bIndex = categoryOrder.indexOf(twitterCategories[b.id]);
+                        if (aIndex == -1 && bIndex > aIndex)
+                            return 1;
+                        else if (bIndex == -1 && aIndex > bIndex)
+                            return -1;
+                        else if (aIndex < bIndex)
+                            return -1;
+                        else if (aIndex > bIndex)
+                            return 1;
+                        return 0
+                    })
+                    //showJson(json)
+                    users.value=json
+                    console.log(users)
+                }
+
+            })
+        })
+    }
+    getJson()
+    createApp({
+        data() {
+            return {
+                message: 'Hello Vue!'
+            }
+        }
+    }).mount('#app')
+</script>
+</html>

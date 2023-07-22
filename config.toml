@@ -1,10 +1,27 @@
-tgbotapitoken = '6378721935:AAGV8ELFAKxnNqNuwYjqs910KgO2Q9LPz1E'
-tgchatid = 6378721935
+#tgbotapitoken = '6378721935:AAGV8ELFAKxnNqNuwYjqs910KgO2Q9LPz1E'
+#tgchatid = -982559994
+#
+#treetoken= '12ea16ea81477588c786d9dd6a04d2bb459281973f4a91626536919a7d1273ba'
+#
+#consumerKey = 'KpbJJ9Rj2iylZOSuNU4giswwm'
+#consumerSecret ='wzu74vcPLRy7HwSwqGDCEuVt6rcW9XTr1zufsclyUCLxPdwh7n'
+#token ='1679372641835307011-SkRAS4iKhu6YXuhtshfxK5OWTveMd1'
+#tokenSecret ='NMBKPOHOx8JwpIXScfunFf0C9ribJCbVmhbAzK5CgHfPM'
+#all = true
+#socket= "0.0.0.0:5555"
+#
 
-treetoken= '12ea16ea81477588c786d9dd6a04d2bb459281973f4a91626536919a7d1273ba'
+tgbotapitoken = '6591732360:AAEZADHiInf3vO4BYdgs4jXHYUmlUzHUs28'
+tgchatid = -1001964184000
+appid= 22896582
+apphash= '585e73c277417d1d4098ff7c12972bbe'
 
-consumerKey = 'ldU0DQnsA18MAHU547bsyYD71'
-consumerSecret ='C7dCocEHQ24DJ76CmECVXIDbpVlNyF0gTL4nnT5AXawUgcrDoJ'
-token ='1679413008949452800-wwJRCU9V8sfISkKM8HZZE8Csw8VrvD'
-tokenSecret ='sHQwKkWpwaTiEctRuhwqFpNQ7to5WTOMFukBots1CwFoM'
 
+treetoken= 'c4f9652f768a33cef5ebf195408758c2811c26ef09f91e5bed466ec7b5c3754f'
+
+consumerKey = 'KpbJJ9Rj2iylZOSuNU4giswwm'
+consumerSecret ='wzu74vcPLRy7HwSwqGDCEuVt6rcW9XTr1zufsclyUCLxPdwh7n'
+token ='1679372641835307011-SkRAS4iKhu6YXuhtshfxK5OWTveMd1'
+tokenSecret ='NMBKPOHOx8JwpIXScfunFf0C9ribJCbVmhbAzK5CgHfPM'
+all = true
+socket= "0.0.0.0:4444"

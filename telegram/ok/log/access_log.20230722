@@ -1,0 +1,8 @@
+{"level":"info","msg":"running...","time":"2023-07-22T00:56:55+08:00"}
+{"level":"warning","msg":"interrupt","time":"2023-07-22T00:58:50+08:00"}
+{"level":"error","msg":"Bad Request: can't parse entities: Can't find end of the entity starting at byte offset 129","time":"2023-07-22T00:58:54+08:00"}
+{"level":"info","msg":"running...","time":"2023-07-22T00:58:54+08:00"}
+{"level":"warning","msg":"interrupt","time":"2023-07-22T00:59:00+08:00"}
+{"level":"info","msg":"running...","time":"2023-07-22T00:59:04+08:00"}
+{"level":"warning","msg":"interrupt","time":"2023-07-22T01:00:15+08:00"}
+{"level":"fatal","msg":"连接 Telegram 失败Unauthorized","time":"2023-07-22T10:40:53+08:00"}

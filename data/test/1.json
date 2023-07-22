@@ -1,0 +1,53 @@
+{
+  "_id": "1689925158207KBWKfswbhatSHiS",
+  "source": "Twitter",
+  "title": "Wu Blockchain (@WuBlockchain): Korea Blockchain Week (KBW for short) will be held at the Shilla Hotel in Seoul, South Korea, the capital of South Korea, from September 4th to 10th.  Established and hosted by Factblock, and co-hosted by Hashed.  Confirmed speakers include: AVA Labs CEO Emin Gün Sirer, Circle… https://twitter.com/i/web/status/1682294158290190336",
+  "url": "https://twitter.com/WuBlockchain/status/1682294158290190336",
+  "icon": "https://pbs.twimg.com/profile_images/1343054286935093249/6FYHByvl.jpg",
+  "image": "",
+  "time": 1689925158207,
+  "info": {
+    "twitterId": "111533746",
+    "isReply": false,
+    "isRetweet": false,
+    "isQuote": false
+  },
+  "suggestions": [
+    {
+      "found": [
+        "ava labs"
+      ],
+      "coin": "AVAX",
+      "symbols": [
+        {
+          "exchange": "binance-futures",
+          "symbol": "AVAXUSDT"
+        },
+        {
+          "exchange": "binance",
+          "symbol": "AVAXUSDT"
+        },
+        {
+          "exchange": "binance",
+          "symbol": "AVAXBTC"
+        },
+        {
+          "exchange": "binance",
+          "symbol": "AVAXBUSD"
+        },
+        {
+          "exchange": "binance",
+          "symbol": "AVAXBNB"
+        },
+        {
+          "exchange": "binance",
+          "symbol": "AVAXETH"
+        },
+        {
+          "exchange": "bybit-perps",
+          "symbol": "AVAXUSDT"
+        }
+      ]
+    }
+  ]
+}

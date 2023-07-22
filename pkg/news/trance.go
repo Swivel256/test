@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	gt "github.com/bas24/googletranslatefree"
+	gtranslate "github.com/gilang-as/google-translate"
 	"github.com/tidwall/gjson"
 	"io/ioutil"
 	"net/http"
@@ -39,21 +40,41 @@ func DeepTranslate(text string) string {
 	return res.String()
 }
 func GoogleTranslate(text string) string {
-	result, _ := gt.Translate(text, "en", "zh")
+	result, err := gt.Translate(text, "en", "zh")
 	//fmt.Println(result)
+	if err != nil {
+		fmt.Println("google", err)
+		return ""
+	}
 	return result
 }
 
 func Translate(text string) string {
-	title := DeepTranslate(text)
-	fmt.Println("deep", title)
-	if title == "" {
+	//fmt.Println("deeprrr", text)
+	//title := DeepTranslate(text)
+	//fmt.Println("deep", title)
+	//if title != "" {
+	//
+	//	fmt.Println("google", title)
+	//
+	//	title = GoogleTranslate(title)
+	//}
 
-		fmt.Println("google", title)
-
-		title = GoogleTranslate(title)
+	value := gtranslate.Translate{
+		Text: text,
+		From: "en",
+		To:   "zh",
 	}
-	//fmt.Println(result)
-	return title
+	translated, err := gtranslate.Translator(value)
+	if err != nil {
+
+	} else {
+		return translated.Text
+	}
+	return text
+
+	//title := GoogleTranslate(text)
+	////fmt.Println(result)
+	//return title
 
 }

@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/ginvmbot/aitrade/pkg/stream"
-	"github.com/gorilla/websocket"
 	"github.com/spf13/viper"
 	"log"
 )
@@ -16,23 +15,24 @@ type Stream struct {
 }
 
 func (s *Stream) createEndpoint(ctx context.Context) (string, error) {
-
 	url := "wss://news.treeofalpha.com/ws"
-	////url := "ws://127.0.0.1:9999/ws"
-	//fmt.Println("url", url)
 	return url, nil
 }
 
 func (s *Stream) handleDisconnect() {
-
-	s.Reconnect()
+	fmt.Println("已断开")
+	s.Connected = false
+	s.Reconnect("handleDisconnect")
 }
 
 func (s *Stream) handleConnect() {
+	fmt.Println("已连接")
+
+	s.Connected = true
 	TreeToken := viper.GetString("treetoken")
 	t := fmt.Sprintf("login %s", TreeToken)
 	fmt.Println(t)
-	s.Conn.WriteMessage(websocket.TextMessage, []byte(t))
+	//s.Conn.WriteMessage(websocket.TextMessage, []byte(t))
 
 }
 
